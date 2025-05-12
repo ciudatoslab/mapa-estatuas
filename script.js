@@ -18,22 +18,17 @@ var map = L.map('map', {
   maxBoundsViscosity: 1.0
 });
 
-// Luego añadimos el mapa base Stadia AlidadeSmooth
+// mapas
 L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png', {
   minZoom: 0,
   maxZoom: 20,
   attribution: '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
-//gson
-const geojson = {
-  "type": "FeatureCollection",
-  "features": [ 
-    // Aquí va tu JSON con las features que me diste...
-  ]
-};
+
+
 
 const customIcon = L.icon({
-  iconUrl: 'icon.png', // pon tu ícono personalizado aquí
+  iconUrl: 'icon.png', 
   iconSize: [30, 40],
   iconAnchor: [15, 40],
   popupAnchor: [0, -35]
@@ -48,7 +43,6 @@ fetch('muestra.geojson')
         const props = feature.properties;
         const id = Math.random().toString(36).substring(2, 9);
 
-        // Formatear el enlace URL para mostrarlo completo y bonito
         const urlDisplay = props.url ? 
           `<div style="margin-top:5px;">
              <strong>Enlace:</strong> 
