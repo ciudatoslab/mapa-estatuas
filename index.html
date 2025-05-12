@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa de Estatuas</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+
+    <style>
+        /* Estilos básicos para que se vea bien */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        #map {
+            width: 100%;           /* No ocupa todo el ancho */
+            height: 500px;        /* Alto fijo */
+            margin: 0 auto;       /* Centrado horizontal */
+            border: 2px solid #444; /* Opcional: borde para mejor visualización */
+            border-radius: 10px;    /* Opcional: esquinas redondeadas */
+        }
+
+        .zoom-info {
+            background: white;
+            padding: 5px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        button {
+            margin: 5px;
+            padding: 10px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Mapa de Estatuas</h1>
+
+    <!-- Botones (puedes luego agregar acciones a estos si quieres) -->
+   
+    <!-- Contenedor del mapa -->
+    <div id="map"></div>
+    <img id="corner1" class="corner-image" />
+    <img id="corner2" class="corner-image" />
+    <img id="corner3" class="corner-image" />
+    <img id="corner4" class="corner-image" />
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
