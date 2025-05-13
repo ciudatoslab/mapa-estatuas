@@ -1,0 +1,49 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+#mapa {
+    width: 100vw;
+    height: 93vh;
+    margin: 0;
+}
+
+.imagen{
+    height: 250px;
+    width: 100%;
+}
+
+nav {
+    top: 0px;
+    background-color: #373737;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.leaflet-popup-content{
+    width: 400px;
+    max-height: 350px; /* ajusta según lo que quieras mostrar */
+    overflow-y: auto;
+}
+
+h3 {
+    color: white;
+    font-family: "Roboto Slab", serif;
+    padding: 20px;
+    text-align: center;
+}
+
+.haro {
+    color: #6EC4B7;
+}
+
+.legend {
+    background-color: white; /* Fondo blanco */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    bottom: 30px;
+  }
