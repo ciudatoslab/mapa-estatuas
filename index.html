@@ -3,31 +3,38 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Mapa de estatuas en Bolivia</title>
 
-  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
   <nav>
-    <img src=""/>
+    <img src="" />
     <h3>Mapa de estatuas en Bolivia</h3>
-    
+
     <select id="ciudades">
-        <option value=""> Elige una ciudad</option>
-        <option value="lapaz">La Paz y El Alto</option>
-        <option value="cochabamba">Cochabamba</option>
-        <option value="sucre">Sucre</option>
+      <option value=""> Elige una ciudad</option>
+      <option value="lapaz">La Paz y El Alto</option>
+      <option value="cochabamba">Cochabamba</option>
+      <option value="sucre">Sucre</option>
       <option value="trinidad">Trinidad</option>
-        <option value="santacruz">Santa Cruz</option>
+      <option value="santacruz">Santa Cruz</option>
     </select>
 
   </nav>
 
   <div id="mapa"></div>
+
+  <!-- Modal for fullscreen images -->
+  <div id="imageModal" class="modal">
+    <span class="close-modal">&times;</span>
+    <img class="modal-content" id="modalImage">
+    <div id="caption"></div>
+  </div>
 
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet-ajax/dist/leaflet.ajax.min.js"></script>
@@ -41,55 +48,88 @@
     }).addTo(map);
 
     var estatuas = L.geoJSON.ajax("estatuas-bol.geojson", {
-  pointToLayer: function (feature, latlng) {
-    return L.marker(latlng, { icon: customIcon });
-  },
-        onEachFeature: function (feature, layer) {
-            layer.bindPopup(`
-            <img class="imagen" src='imgs/${feature.properties['img']}'/><br><br>
-            <b>${feature.properties['Nombre']} (${feature.properties['year']})</b><br>
-            ${feature.properties['Selecciona el estado de conservación de la estatua']}<br> 
-            <a href='${feature.properties['url']}'>Conozca más</a><br>
-            ${feature.properties['Descripcion']}
-            `)
-        }
-    }
-    )
+      pointToLayer: function (feature, latlng) {
+        return L.marker(latlng, { icon: customIcon });
+      },
+      onEachFeature: function (feature, layer) {
+        const imagePath = `imgs/${feature.properties['img']}`;
+        const statueName = feature.properties['Nombre'];
 
-    const customIcon = L.icon({
-    iconUrl: 'a.png', 
-    iconSize: [30, 32],
-    iconAnchor: [15, 40],
-    popupAnchor: [0, -35],
-    opacity: 0.7
+        layer.bindPopup(`
+          <div class="image-container">
+            <img class="imagen" src='${imagePath}' alt="${statueName}"/><br><br>
+            <div class="fullscreen-icon" data-img="${imagePath}" data-title="${statueName} (${feature.properties['year']})">
+                <i class="fas fa-expand" style="font-size: 2em;"></i>
+            </div>
+          </div>
+          <b>${statueName} (${feature.properties['year']})</b><br>
+          ${feature.properties['Selecciona el estado de conservación de la estatua']}<br> 
+          <a href='${feature.properties['url']}'>Conozca más</a><br>
+          ${feature.properties['Descripcion']}
+        `);
+
+        layer.on('popupopen', function () {
+          document.querySelectorAll('.fullscreen-icon').forEach(icon => {
+            icon.addEventListener('click', function () {
+              const modal = document.getElementById('imageModal');
+              const modalImg = document.getElementById('modalImage');
+              const captionText = document.getElementById('caption');
+
+              modal.style.display = "flex";
+              modalImg.src = this.getAttribute('data-img');
+              captionText.innerHTML = this.getAttribute('data-title');
+            });
+          });
+        });
+      }
     });
 
-    estatuas.addTo(map)
+    const customIcon = L.icon({
+      iconUrl: 'a.png',
+      iconSize: [30, 32],
+      iconAnchor: [15, 40],
+      popupAnchor: [0, -35],
+      opacity: 0.7
+    });
+
+    estatuas.addTo(map);
 
     var logoControl = L.control({ position: 'bottomright' });
 
     logoControl.onAdd = function (map) {
-        var div = L.DomUtil.create('div', 'logo-watermark');
-        div.innerHTML = '<a href="https://ciudatoslab.org/"><img src="ciudatoslogo.png" style="width:100px; opacity: 0.8;"></a>';
-        return div;
+      var div = L.DomUtil.create('div', 'logo-watermark');
+      div.innerHTML = '<a href="https://ciudatoslab.org/"><img src="ciudatoslogo.png" style="width:100px; opacity: 0.8;"></a>';
+      return div;
     };
 
-logoControl.addTo(map);
+    logoControl.addTo(map);
 
     const coordenadasCiudades = {
-        lapaz:      { lat: -16.5, lng: -68.15, zoom: 14 },
-        cochabamba: { lat: -17.38, lng: -66.15, zoom: 13 },
-        sucre:      { lat: -19.05, lng: -65.25, zoom: 14 },
-        trinidad:   { lat: -14.83, lng: -64.90, zoom: 15 },
-        santacruz:  { lat: -17.78, lng: -63.18, zoom: 13 }
-        };
+      lapaz: { lat: -16.5, lng: -68.15, zoom: 14 },
+      cochabamba: { lat: -17.38, lng: -66.15, zoom: 13 },
+      sucre: { lat: -19.05, lng: -65.25, zoom: 14 },
+      trinidad: { lat: -14.83, lng: -64.90, zoom: 15 },
+      santacruz: { lat: -17.78, lng: -63.18, zoom: 13 }
+    };
 
     document.getElementById('ciudades').addEventListener('change', function (e) {
-    const ciudad = e.target.value;
-    if (ciudad && coordenadasCiudades[ciudad]) {
-    const { lat, lng, zoom } = coordenadasCiudades[ciudad];
-    map.flyTo([lat, lng], zoom); // animación suave
-    }
+      const ciudad = e.target.value;
+      if (ciudad && coordenadasCiudades[ciudad]) {
+        const { lat, lng, zoom } = coordenadasCiudades[ciudad];
+        map.flyTo([lat, lng], zoom); // animación suave
+      }
+    });
+
+    // Close the modal when clicking on the X
+    document.querySelector('.close-modal').addEventListener('click', function () {
+      document.getElementById('imageModal').style.display = "none";
+    });
+
+    // Close the modal when clicking outside the image
+    document.getElementById('imageModal').addEventListener('click', function (event) {
+      if (event.target === this) {
+        this.style.display = "none";
+      }
     });
   </script>
 </body>
