@@ -10,9 +10,6 @@
     margin: 0;
 }
 
-.imagen {
-    width: 100%;
-}
 
 nav {
     top: 0px;
@@ -25,9 +22,17 @@ nav {
 
 .leaflet-popup-content {
     width: 200px;
-    /* ajusta según lo que quieras mostrar */
+    height: 300px;
     overflow-y: auto;
 }
+
+.imagen {
+    width: 100%;
+    max-height: 200px;
+    object-fit: cover;
+    object-position: top;
+}
+
 
 h3 {
     color: white;

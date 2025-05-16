@@ -40,7 +40,11 @@
   <script src="https://unpkg.com/leaflet-ajax/dist/leaflet.ajax.min.js"></script>
 
   <script>
-    let map = L.map('mapa').setView([-17.3833, -66.15], 13);
+    const isMobile = window.innerWidth <= 768;
+
+    let map = L.map('mapa', {
+      scrollWheelZoom: !isMobile,
+    }).setView([-17.3833, -66.15], 13);
 
     L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
       maxZoom: 19,
@@ -129,6 +133,12 @@
     document.getElementById('imageModal').addEventListener('click', function (event) {
       if (event.target === this) {
         this.style.display = "none";
+      }
+    });
+    // Close the modal when pressing the Escape key
+    document.addEventListener('keydown', function (event) {
+      if (event.key === "Escape") {
+        document.getElementById('imageModal').style.display = "none";
       }
     });
   </script>
