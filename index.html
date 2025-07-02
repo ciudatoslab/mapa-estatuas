@@ -69,9 +69,10 @@
             </div>
           </div>
           <b>${statueName} (${feature.properties['year']})</b><br>
-          ${feature.properties['Selecciona el estado de conservación de la estatua']}<br> 
-          <a href='${feature.properties['url']}'>Conozca más</a><br>
-          ${feature.properties['Descripcion']}
+          <hr>
+          <b>Estado: </b>${feature.properties['Selecciona el estado de conservación de la estatua']}<br> 
+          <b>Descripción: </b>${feature.properties['Descripcion']} <br>
+          <a href='${feature.properties['url']}'>Conozca más</a>
         `);
 
         layer.on('popupopen', function () {
