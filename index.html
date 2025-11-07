@@ -25,6 +25,7 @@
       <option value="santacruz">Santa Cruz</option>
       <option value="tarija">Tarija</option>
       <option value="bermejo">Bermejo</option>
+      <option value="oruro">Oruro</option>
     </select>
 
   </nav>
@@ -112,13 +113,14 @@
     logoControl.addTo(map);
 
     const coordenadasCiudades = {
-      lapaz: { lat: -16.5, lng: -68.15, zoom: 14 },
+      lapaz: { lat: -16.5, lng: -68.15, zoom: 13 },
       cochabamba: { lat: -17.38, lng: -66.15, zoom: 13 },
       sucre: { lat: -19.05, lng: -65.25, zoom: 14 },
       trinidad: { lat: -14.83, lng: -64.90, zoom: 15 },
       santacruz: { lat: -17.78, lng: -63.18, zoom: 13 },
       tarija: { lat: -21.53, lng: -64.73, zoom: 14 },  
-      bermejo: { lat: -22.73, lng: -64.33, zoom: 14 }  
+      bermejo: { lat: -22.73, lng: -64.33, zoom: 14 },
+      oruro: { lat: -17.98, lng: -67.11, zoom: 14} 
     };
 
     document.getElementById('ciudades').addEventListener('change', function (e) {
